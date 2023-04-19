@@ -50,10 +50,12 @@ class Hello { }
 public class가 있을 경우 소스파일의 이름은 반드시 public class의 이름과 일치해야하한다.
 
 <br>
+
 ```java
 class Hello1 { }
 class Hello2 { }
 ```
+
 그리고 만약 public class가 없다면 파일이름에 상관없이 여러개의 클래스를 선언할 수 있다.
 소스파일의 이름이 Hello1.java가 될 수 도 있고, Hello2.java가 될 수 도 있는 것이다.
 
@@ -63,6 +65,7 @@ class Hello2 { }
 클래스에는 인스턴가 가져야 할 구성멤버가 선언된다.
 구성 멤버에는 필드, 생성자, 메소드가 있다.
 구성 멤버들은 생략되거나 여러 개가 작성될 수 있다.
+
 ```java
 class student {
   //필드: 객체의 데이터가 저장되는 곳
