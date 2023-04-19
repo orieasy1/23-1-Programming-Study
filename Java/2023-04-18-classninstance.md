@@ -98,3 +98,17 @@ new 연산자 뒤에는 생성자가 오는데 생성자는 클래스명 형태�
 
 인스턴스 변수는 클래스 객체에서 사용되는 변수로 객체마다 서로 다른 값을 가질 수 있다. 인스턴스 변수는 객체가 생성될 때마다 생성되며, 해당 객체의 참조변수를 통해 접근할 수 있다.
 
+
+
+
+
+
+```java
+class BankAccountPO {
+  static int balance = 0;   //예금 잔액, 클래스 변수
+  
+  public static int deposit(int amount) {
+    balance += amount;
+    reutrn balance;
+    
+```
