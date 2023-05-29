@@ -23,9 +23,17 @@
 예상치 못한 동작이 발생하는 것을 막고 속성들에 기본 값을 제공하여 인스턴스를 안정적으로 상용할 수 있도록 하기 위해 인스턴스 초기화가 필요하다.
 멤버들을 초기화하는 것을 자바 문법으로 지정해 놓은 것이 생성자라 생각하면 된다.
 <br><br>
+생성자를 호출할 때는 new키워드와 함게 호출한다.
+우리가 인스턴스를 생성할 대 해당 클래스의 생성자를 호출하여 객체를 초기화한다고 생각하면 된다.
+인스턴스를 생성할 때 new 인스턴스명(); 이렇게 코드를 작성해주면되는데 ();가 읨하는 것이 인자를 전달받지 않은 생성자를 호출하는 것이다.
+<br><br>
 생성자는 우리가 명시적으로 정의하지 않아도 인스턴스를 생성하는 과정에서 자동으로 호출되면서 초기화가 이루어진다.
+인스턴스 생성과정에서는 무조건 생성자가 호출되어야한다고 자바에서 문법적으로 정핺았기 때문에 사용자가 생성자를 작성하지 않는다면 자바 컴파일러가 자동으로 넣어준다.
 이것을 우리는 **기본 생성자 혹은 디폴트 생성자**라고 부른다.
-매개변수가 없다는 것이 특징이다.
+
+디폴트 생성자는 하는 일이 없고 비어있으며 인자값도 전달받지 않는다.
+매개 변수가 존재하지 않는다는 뜻이다.
+이렇게 자바 컴파일러가 생성자를 삽입시켜준다하더라도 좋은 클래스가 되기위해서는 가급적 생성자를 직접 정의시켜주는 것이 좋다.
 <br><br>
 반면 매개변수가 있는 생성자도 있는데, 이때는 객체를 생성하면서 초기화할 값들을 전달할 수 있다.
 객체 생성과 동시에 초기값을 설정할 수 있다는 장점이 있다.
@@ -70,11 +78,131 @@ class BankAccountConstructor {
 학생 정보를 출력하는 프로그램 예시
 ```java
 class Student{
-  String school = "서울과학기술대학교";
-  int studentID;
-  String name;
-  int age;
+	String school = "서울과학기술대학교";
+ 	int studentID;
+ 	String name;
+ 	int age;
   
-  public Student(int studentID, String name, int age;
+ 	public Student(int studentID, String name, int age) {//생성자
+  	this.studentID = studentID;
+	this.name = namel
+	this.age = age;
+	}
+	
+	public void studentProfile() {
+		System.out.println("---------------------------");
+		System.out.println("학교 : " +school);
+		System.out.println("학번 : " +studentID);
+		System.out.println("이름 : " +name);
+		System.out.println("나이 : " +age);
+		System.out.println("---------------------------");
+	}
+
  ```
+ <br><br><br>
+ 
+<h3>생성자 오버로딩</h3>
+생성자 오버로딩에 있어서 꼭 알아야하는 키워드가 바로 this이다.
+하지만 우리는 앞서 생성자 오버로딩이 아니라 인스턴스 변수에 접근하기 위해서 this 키워드를 사용했었다.
+바로 위 예제에서도 나온 것 처럼 클래스 내에서 멤버 변수와 메서드의 매개 변수 이름이 동일할 경우, this를 사용하여 인스턴스 변수 참조할 수 있다.
+학생정보를 출력하는 코드에서 생성자 { }안 코드를 보면 this.studentID = studentID;라는 코드를 발견할 수 있는데 이는 메소드의 매개변수로 전달 받은 studentID값을 클래스내 인스턴스 변수 studentID에 저장하겠다는 뜻이다.
+<br><br>
+메소드에 대해 공부할 때 메소드의 이름이 같아도 매개변수 선언이 다르면 메소드 호출문의 전달인자를 통해 메소드를 구분할 수 있기 때문에, 매개변수의 선언이 다르면 동일한 이름의 메소드 정의를 허용하는 것을 메소드 오버로딩이라고 배웠다.
+그리고 생성자도 오버로딩의 대상이된다.
+<br><br>
+생성자 또한 이름이 같더라도 매개변수의 선언이 다르면 둘 이상 정의가 가능하다.
+매개변수의 개수, 타입 또는 순서를 다르게 하여 **다양한 방식으로 객체를 초기화**할 수 있도록 한다.
+생성자 오버로딩을 사용하는 이유는 다음과 같다.
+
+1. 다양한 초기화 방법 제공<br>
+생성자 오버로딩을 통해 매개변수의 종류나 개수를 다르게 함으로써 객체를 다양한 방식으로 초기화할 수 있다.
+2. 편의성 제공<br>
+생성자 오버로딩을 사용하면 매개변수의 조합에 따라 사용자가 편리하게 객체를 생성할 수 있다. 이를 통해 객체 생성코드의 가독성과 유연성을 높일 수 있다.
+
+이해를 위해 예시를 들어보자면, 사람들의 정보를 저장해서 보여주는 예제를 작성할 때, 사람마다 정보 개수가 다를 수 있을 것이다. 여권이 있는 사람도 있을 것이고 없는 사람도 있을 텐데, 없는 사람은 여권 관련된 정보를 표시하지 않도록 생성자 오버로딩을 사용해서 표기할수 있다.
+
+```java
+class Person {
+	private int regiNum;	//주민등록번호
+	private int passNum;	//여권번호
+	
+	Person(int rnum, int pnum) {
+		regiNum = rnum;
+		passNum = pnum;
+	}
+	
+	Person(int rnum) { //생성자 오버로딩
+		regiNum = rnum;
+		passNum = 0;
+	}
+	
+	void showPersonalInfo() {
+		System.out.println("주민등록번호: " + regiNum);
+		if(passNum != 0) 
+			System.out.println("여권 번호: " + passNum + '\n');
+		else
+			System.out.println("여권을 가지고 있지 않ㅅ습니다 \n");
+	}
+}
+
+class ConOverloading {
+	public static void main(String[] args) {
+		//여권 있는 사람의 정보를 담은 인스턴스 생성
+		Person kim = new Person(335577, 112233);
+		
+		//여권 없는 사람의 정보를 담은 인스턴스 생성
+		Person lee = new Person(775544);
+		
+		kim.showPersonalInfo();
+		lee.showPersonalInfo();
+	}
+}
+```
+<br><br>
+
+위 코드에서 Person 클래스 부분을 다음과 같이 수정할 수 있다.
+
+```java
+class Person {
+	private int regiNum;
+	private int passNum;
+	
+	Person(int rnum, int pnum) {
+		regiNum = rnum;
+		passNum = 0;
+	}
+	
+	Person(int rnum) {
+		this(rnum, 0);
+	}
+	
+	void showPersonalInfo() {
+		System.out.println("주민등록번호: " + regiNum);
+		if(passNum != 0) 
+			System.out.println("여권 번호: " + passNum + '\n');
+		else
+			System.out.println("여권을 가지고 있지 않ㅅ습니다 \n");
+	}
+}
+```
+
+두번째 생성자가 어떻게 바뀌었는지에 대해 주목할 필요가 있다.
+
+this(rnum, 0);
+
+위 코드는 메소드를 호출하는 코드와 똑같이 생겼지만 실제로는 생성자를 호출하는 코드이다.
+rnum,과 0을 인자로 받는 오버로딩된 다른 생성자를 호출하는 것이다.
+이렇게 생성자를 정의하면 이 생성자는 초기화할 값을 전달받는 역할만 하고 실제 초기화는 첫번째로 정의된 생성자를 통해서 진행하는 형태가 된다.
+this를 이용한 생성자의 정의를 이용하면 중복된 코드를 줄일 수 있다.
+<br><br>
+this를 한국어로 번역하면 '이'가 될 것이다.
+자바에서 사용하는 this 키워드도 '
+
+
+
+
+
+
+
+
 
