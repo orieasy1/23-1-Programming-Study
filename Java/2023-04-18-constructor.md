@@ -168,13 +168,17 @@ class Person {
 	private int regiNum;
 	private int passNum;
 	
+	//여권이 있는 사람을 우히나 생성자
 	Person(int rnum, int pnum) {
 		regiNum = rnum;
 		passNum = 0;
 	}
 	
+	//여권 없는 사람을 위한 생성자
 	Person(int rnum) {
 		this(rnum, 0);
+		//이 인스턴스 내에서 rnum과 0을 인자로 받는 다른 생성자를 호출
+		//위에서 사용된 this는 오버로딩 된 다른 생성자를 의미
 	}
 	
 	void showPersonalInfo() {
@@ -198,9 +202,69 @@ this를 이용한 생성자의 정의를 이용하면 중복된 코드를 줄일
 <br><br>
 this를 한국어로 번역하면 '이'가 될 것이다.
 자바에서 사용하는 this 키워드도 '이'와 관련되어있다. 기본적으로 this가 의미하는 것이 이 인스턴스라고 기억하면된다.
-그래서 위코드는 이 인스턴스에서 rnum과 0을 인자로 받는 다른 생성자를 호출하라는 코드가 되는 것이다.
+그래서 위 코드는 이 인스턴스에서 rnum과 0을 인자로 받는 다른 생성자를 호출하라는 코드가 되는 것이다.
+this키워드를 이용한 다른 생성자 호출은 생성자 맨 첫 줄에만 올 수 있다는 점을 기억해야한다.
+<br><br>
+위 코드를 해석해보면 kim의 경우 주민등록번호와 여권번호를 모두 가지고 있고 이 두 인자를 매개변수로 받는 첫 번째 생성자에 저장된다.
+인스턴스 lee의 경우 주민등록번호만 가지고 있고 주민등록번호 인자만 전달되는 두번째 생성자에 저장되게 된다.
+this(rnum, 0);이라는 코드를 통해 lee의 rnum인 775544과 0df 둘다 인자로 받을 수 있는 처첫 번째 생성자를 호출하여 regiNum에는 775544를 저장하고 passNum에는 0을 저장하는 것이다.
+두 인스턴스 모두 Person이라는 클래스를 바탕으로 생성되었으므로 우리가 코드를 볼때는 클래스 Person안에 생성자 코드를 보고 어떤 생성자가 호출되었는지 판단할 수 있다.
 
+학생정보를 출력하는 코드
+```java
+class Student{
+	//필드
+	String school = "서울과학기술대학교";
+	int studentID;
+	String name;
+	int age;
 
+	//기본생성자
+	public Student() {
+
+	}
+
+	//생성자 오버로딩
+	public Student(int studentID) {
+		this(studentID, null, 0);	//다른 생성자 호출
+		//첫줄에만 올 수 있다.
+	}
+
+	public Student(int studentId, String name) {
+		this(studentID, name, 0);
+	}
+
+	public Student(int studentID, String name, int age) {
+		this.studentID = studentID;
+		this.name =name;
+		this.age = age;
+	}
+	
+	public void studentProfile() {
+		System.out.println("---------------------------");
+		System.out.println("학교 : " +school);
+		System.out.println("학번 : " +studentID);
+		System.out.println("이름 : " +name);
+		System.out.println("나이 : " +age);
+		System.out.println("---------------------------");
+	}
+}
+
+public class Ex02 {
+	public static void main(String[] args) {
+	Student student = new Student(22102009, "이지원", 21);
+	
+	student.studentProfile();
+	}
+}
+```
+
+<br><br>
+문제 해결
+1. car class를 만든다.
+2. 필드는 private String color; private int speed;로 한다.
+3. 생성자에서 매개변수로 매개 값을 받아서 필드를 초기화한다.
+4. 속도가 30alaksdlrjsk threhrk 200d
 
 
 
