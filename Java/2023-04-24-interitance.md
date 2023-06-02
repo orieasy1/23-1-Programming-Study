@@ -11,7 +11,12 @@
 A, B, C라는 클래스가 있다고 할 때 클래스가 다른 어떤 규칙을 적용시키기 어렵니다.
 기본적으로 A, B, C를 위한 규칙이 서로 다르기 때문이다.
 그러나 상속으로 A, B, C를 묶어서 서로 관계를 갖게 하면 서로 동일한 규칙, 규약을 적용할 수 있게 된다.
+<br><br>
+상위 클래스의 속성과 메소드를 하위 클래스가 상속받아 사용할 수 있으므로 공통된 기능을 한 번만 구현하고 여러 클래스에서 활용할 수 있다.
 또 부모 클래스의 수정으로 모든 자식 클래스들도 수정되는 효과를 가져오기 때문에 유지보수시간을 최소화할 수 있다.
+<br><br>
+또 상속을 통해 다형성을 구현할 수 있다.
+상위 클래스 타입으로 하위 클래스의 객체를 참조하면, 동일한 타입으로 여러 종류의 객체를 다룰 수 있다.
 <br><br><br>
 
 <h3>클래스 상속</h3>
@@ -188,10 +193,14 @@ class BussinessMan extends Man {
 }
 
 public class MyBusinessMan {
-	pubic static void main(String[] args) {
+	public static void main(String[] args) {
+		BusinessMan man = new BusinessMan("yoon", "hybrid ELD", "Staff Eng.");
+		man.tellYourInfo();
 	
 ```
 
+```java
+class People {
 
 
 
