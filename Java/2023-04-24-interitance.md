@@ -326,15 +326,61 @@ class SuperSubStatic {
 
 
 <h3>상속을 위한 두 클래스의 관계: IS-A관계</h3>
+IS-A관계는 객체지향 프로그래밍에서 상속관계를 나타내는 개념이다.
+기본적으로 이 관계가 성립해야 상속의 후보로 고려할 수 있다.
+A는 B이다로 표현되는 개념으로, 하나의 클래스가 다른 클래스의 일종이라는 의미를 가지게 된다.
+
+하위 클래스는 상위 클래스의 모든 특성을 지닌다.
+거기에 더해서 하위 클래스는 자신만의 추가적인 특성을 더하게 되는 것이다.
+클래스 B가 클래스 A를 상속한다고 하자.
+두 클래스는 각자 변수와 메소드를 가지고 있을 것이다.
+클래스 B는 클래스 A가 가지고 있는 변수와 메소드를 상속받기 때문에 B 클래스의 인스턴스를 생성하면 그 안에는 클래스 A가 가지고 있는 변수와 메소드가 같이 존재하게 된다.
+즉 하위클래스인 B는 상위 클래스인 A의 변수와 메소드를 모두 지니기 때문에 하위 클래스 B가 상위클래스 A의 모든 특성을 가진다고 할 수 있다.
+다르게 말하면 A클래스가 할 수 있는 일은 B클래스도 할 수 있다.
 
 ```java
 class MobilePhone {
 	protected String number; //전화번호
 	
-	public MobilePhone(String num) { //
+	public MobilePhone(String num) { //생성자
+		number = num;
+	}
+	
+	public void answer() { //메소드
+		System.out.println("hi~ from + number);
+	}
+}
+
+class SmartPhone extends MobilePhone {
+	private String androidVer; //안드로이드 운영체제
+	
+	public SmartPhone(String num, String ver) { //생성자
+		super(num); //부모클래스 MobilePhone의 생성자 호출
+		androidVer = ver;
+	}
+	
+	public void playApp() { //메소드
+		System.out.println("App is running in" + androidVer);
+	}
+}
+
+class MobileSnartPhone {
+	public static void main(String[] args) {
+	SmartPhone phone = new SmartPhone("010-5101-5167", "Nougat");
+	
+	phone.answer();
+	phone.playApp();
+	}
+}
 ```
+
+위 예시에서 스마트폰은 모바일 폰을 상속한다.
+전화기능이 전부인 폰을 모바일 폰이라고 한다면 스마트폰은 전화기능은 물론 다른 여러 가지 기능을 가질 수 잇을 것이다.
+위 코드에서는 앱을 실행할 수 있는 기능을 추가했다고 보면 된다.
+모바일폰이 가지고 있는기능이 스마트폰에도 그대로 있다고 볼 수 있기에 이 둘을 상속으로 묶는 것은 바람직하다.
+
 <h3>메소드 오버라이딩(재정의)</h3>
-부모 클래스의 모든 메소드가 자식 클래스에 맞게 설계되어있다면 좋겠지만 어떤 메솓는 자식 클래스가 사용하기에 적합하지 않을 수도 있다.
+부모 클래스의 모든 메소드가 자식 클래스에 맞게 설계되어있다면 좋겠지만 어떤 메소는 자식 클래스가 사용하기에 적합하지 않을 수도 있다.
 이 경우 상속된 일부 메소드는 자식 클래스에서 다시 수정해서 이용해야한다.
 자바는 이런 경우 메소드 오버라이딩(재정의) 기능을 제공한다.
 <br><br>
