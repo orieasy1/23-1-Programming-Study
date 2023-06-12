@@ -41,7 +41,40 @@ class 자식클래스 extends 부모클래스 {
 2. 부모클래스에서 private 접근제한을 갖는 필드와 메솓는 상속대상에서 제외된다.<br>
 또 만약 부모클래스와 자식 클래스가 다른 패키지에 존재한다면 default 접근제한을 갖는 필드와 메소드도 상속 대상에서 제외된다.
 <br><br>
+```java
+class Parent{ //부모클래스
+	int parentField = 100;
+	
+	public void parentMethod() {
+		System.out.println("부모 클래스 메소드 입니다.");
+	}
+}
+
+class Child extends Parent { //자식클래스
+	int childField = 200;
+	
+	public void childMethod() {
+		System.out.println("자식클래스 메소드입니다.");
+	}
+}
+
+public class PrintOut {
+	public static void main(String[] args) {
+		Child child = new child();
+		//자식 객체에서도 부모의 멤버를 자연스럽게 사용할 수 있다.
+		
+		System.out.println(child.childField); //자식필드
+		System.out.println(child.parentField); //부모필드
+		System.out.println();
+		
+		child.childMethod(); //자식메소드
+		child.parentMEthod(); //부모메소드
+	}
+}
+```
+	
 예제) 사람의 이름과, 회사, 직책을 출력하는 프로그램
+
 ```java
 class Man {
   //필드
@@ -199,6 +232,33 @@ public class MyBusinessMan {
 		BusinessMan man = new BusinessMan("yoon", "hybrid ELD", "Staff Eng.");
 		man.tellYourInfo();
 	
+```
+
+```java
+class Sedan {
+	String color;
+	
+	public Sedan(String color) {
+		System.out.println("Sedan 클래스 생성자 입니다");
+		this.color = color
+	}
+}	
+	
+class Sonata extends Sedan() {
+	public Sonata(String color) { //생성자
+		super("파랑");
+		System.out.println("Sonata 클래스 생성자 입니다.");
+	}
+}
+
+public class PrintOut {
+	public static void main(String[] args) {
+		Sonata sonata = new Sonata("파랑");
+		//Sedan 객체가 먼저 생성이 되고 그 다음에 Sonata 객체가 생성이됨
+		
+		System.out.println(sonata.color);
+	}
+}
 ```
 
 ```java
@@ -405,8 +465,13 @@ IS-A관계에서 예시로 들었던 것처럼 자식클래스를 스마트폰, 
 그러나 자식클래스형 참조변수로 부모 인스턴스를 참조하는 것은 불가능하다.
 자식클래스에서는 부모 클래스 멤버를 모두 상속받아 사용할 수 있지만, 부모 클래스에서는 자식클래스에 선언된 멤버를 알지 못하기 때문이다.
 따라서 부모클래스의 인스턴스를 자식클래스의 참조변수로 참조할 경우, 자식 클래스에만 존재하는 멤버에 접근하려 시도하면 컴파일러가 이를 알지 못해 오류가 발생한다.
+
+```java
+class Cake {
+	public void sweet() {...}
+```
 <br><br>
-메소드가 재정의 되었다면 부모 객체의 메솓는 숨겨지기 때문에 자식 객체에서 메소드를 호출하면 재정의된 자식 메소드가 호출된다.
+메소드가 재정의 되었다면 부모 객체의 메소는 숨겨지기 때문에 자식 객체에서 메소드를 호출하면 재정의된 자식 메소드가 호출된다.
 
 
 
