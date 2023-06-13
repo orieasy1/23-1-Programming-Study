@@ -1,4 +1,4 @@
-<h1>상속과 다형성</h1>
+<h1>상속</h1>
 
 현실에서 상속은 부모가 자식에게 무엇을 물려주는 행위를 말한다. 
 객체 지향 프로그래밍에서도 부모 클래스의 멤버를 자식 클래스에게 물려줄 수 있다.
@@ -462,17 +462,67 @@ IS-A관계에서 예시로 들었던 것처럼 자식클래스를 스마트폰, 
 자식 클래스 인스턴스가 모든 멤버를 가지고 있더라도 접근할 수 있는 것은 부모의 인스턴스로 제한된다.
 스마트폰처럼 쓰려면 스마트폰 참조변수로 접근해야한다.
 정리하자면 **자식클래스형 참조변수와 부모클래스형 참조변수로 자식 인스턴스를 참조할 수 있으며 부모클래스형 참조변수로 자식 인스턴스를 참조하게 된다면 제한되는 부분이 생길 수 있다**는 것이다.
+그 참조변수가 어떤 클래스의 인스턴스를 참조하는지와는 전혀 상관이 없다.
+참조변수의 형(부모클래스형인지 자식클래스형인지)에 따라 접근가능한 멤버가 결정된다.
+이러한 형태의 판단은 속도가 빠르다.
 <br><br>
 그러나 자식클래스형 참조변수로 부모 인스턴스를 참조하는 것은 불가능하다.
 자식클래스에서는 부모 클래스 멤버를 모두 상속받아 사용할 수 있지만, 부모 클래스에서는 자식클래스에 선언된 멤버를 알지 못하기 때문이다.
 따라서 부모클래스의 인스턴스를 자식클래스의 참조변수로 참조할 경우, 자식 클래스에만 존재하는 멤버에 접근하려 시도하면 컴파일러가 이를 알지 못해 오류가 발생한다.
 
 ```java
-class Cake {
+class MobilePhone {
+	protected String number;
+	
+	public MobilePhone1(String num) { //생성자
+		number = num;
+	}
+	
+	public void answer() { //메소드
+		System.out.println("hi~ from" + number);
+	}
+}
+
+class SmartPhone extends MobilePhone {
+	private String androidVer;
+	
+	public SmartPhone(String num, String ver) { //생성자
+		super(num);
+		androidVer = ver;
+	}
+	
+	public void playApp() { //메소드
+		System.out.println("App is running in" + androidVer);
+	}
+}
+
+public class MobileSmartPhoneREf {
+	public static void main(String[] args) {
+		//SmartPhone형 참조변수를 통해 SmartPhone의 인스턴스 접근
+		SmartPhone ph1 = new SmartPhone("010-5101-5167", "Nougat");
+		//MobilePhone형 참조변수를 통해 SmartPhone의 인스턴스 접근
+		MobilePhone ph2 = new SmartPhone("010-3691-1493", "Nougat");
+
+		ph1.answer();
+		ph1.playApp();
+		System.out.println();
+		
+		ph2.answer();
+		//ph2.playApp();	은 불가능
+		//ph2는 MobilePhone형 참조변수로 ph2를 통해 접근 가능한 멤버는 MobilePhone 클래스에 정의 되었거나 이 클래스가 상속하는 클래스의 멤버로 제한
+		//ph2가 참조하는 인스턴스가 무엇인지 상관없다.
+	}
+}
+```
+
+최종정리를 해보자.
+
+```java
+class Cake { 
 	public void sweet() {...}
 }
 
-class CheeseCake extends Cake {
+class CheeseCake extends Cake { 
 	public void milky() {...}
 }
 
@@ -480,14 +530,53 @@ class StrawberrCheeseCake extends CheeseCake {
 	public void sour() {...}
 }
 
-
-Cake cake1 = new StrawberryCheeseCake();
-CheeseCake cake2 = new StrawberryCheeseCake();
+public class YummyCake {
+	public static void main(String[] args) {
+		Cake cake1 = new StrawberryCheeseCake();
+		CheeseCake cake2 = new StrawberryCheeseCake();
+	}
+}
 ```
+우선 참조변수 cake1은 Cake형 참조변수로 StrawberryCheeseCake 인스턴스를 참조하고 있고
+참조변수 cake2는 CheeseCake형 참조변수로 역시 StrawberryCheeseCake 인스턴스를 참조하고 있다.
+
+Cake형 참조변수 cake1을 통해사 호출할 수 있는 메소드는 sweet 메소드 한 가지이다.<br>
+cake1.sweet();
+
+CheeseCake형 참조변수 cake2를 통해 호출할 수 있는 메소드는 CheeseCake 클래스 안에 존재하는 milky 메소드와 CheeseCake 클래스가 상속하는 Cake 클래스 안에 존재하는 sweet 메소드이다.<br>
+cake2.sweet();<br>
+cake2.milky();
 <br><br>
-메소드가 재정의 되었다면 부모 객체의 메소는 숨겨지기 때문에 자식 객체에서 메소드를 호출하면 재정의된 자식 메소드가 호출된다.
+추가적으로 상속관계에 있는 두 클래스의 참조관계가 배열까지 이어진다는 사실을 기억하자.<br>
+CheeseCake[] cales = new CheeseCake[10];<br>
+Cake[] cakes = new CheeseCake[10];<br>
+위에는 당연하 가능한 부분이고 밑의 경우와 같이 CheeseCake배열을 생성하고 참조하는 것도 가능하다는 뜻이다.
 
+<br><br>
+**메소드 오버라이딩**
+상위 클래스에 정의된 메소드를 하위 클래스에서 다시 정의하는 행위를 메소드 오버라이딩이라 하는데, 여기서 말하는 오버라이딩은 무효화 시키다의 뜻으로 해석ㄷ이 된다.
+메소드가 재정의 되었다면 부모 객체의 메소드는 무효화되기 때문에 즉 숨겨지기 때문에 자식 객체에서 메소드를 호출하면 재정의된 자식 메소드가 호출된다.
 
+```java
+class Cake {
+	public void yummy() {
+		System.out.println("Yummy Cake");
+	}
+}
+
+class CheeseCake extends Cake {
+	public void yummy() { //Cake의 yummy를 오버라이딩 
+		System.out.println("Yummy Cheese Cake");
+	}
+}
+
+class YummyCakeOverrideing {
+	public stati void main(String[] args) {
+		Cake cake1 = new CheeseCake();
+		CheeseCake cake2 = new CheeseCake();
+		
+		cake1.yummy(); //오버라이딩한 CheesCake의 yummy 메소드 호출됨
+		
 
 
 
