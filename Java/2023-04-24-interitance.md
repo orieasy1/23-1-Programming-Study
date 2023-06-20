@@ -571,13 +571,13 @@ class CheeseCake extends Cake {
 }
 
 class YummyCakeOverrideing {
-	public stati void main(String[] args) {
+	public static void main(String[] args) {
 		Cake cake1 = new CheeseCake();
 		CheeseCake cake2 = new CheeseCake();
 		
 		cake1.yummy(); //오버라이딩한 CheesCake의 yummy 메소드 호출됨
-		
 
+```
 
 
 
