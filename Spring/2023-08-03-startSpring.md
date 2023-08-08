@@ -1,4 +1,5 @@
-<h1>스프링 + 개발환경구축 + Maven</h1>
+<h1>스프링 + 개발환경구축</h1>
+Maven도 공부했지만 2일차에 기록
 
 <h3>Spring과 Spring Framework</h3>
 
