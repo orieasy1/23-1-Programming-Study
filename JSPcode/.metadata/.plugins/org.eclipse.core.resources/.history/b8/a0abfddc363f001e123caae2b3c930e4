@@ -1,0 +1,289 @@
+package com.jsp.kgmember;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+public class MemberDAO {
+	
+	// DAO : Data Access Object
+	// 데이터베이스의 데이터에 접근하여 CRUD를 처리하는 객체
+	
+	private DataSource ds;
+	// Connection Pool을 관리하는 객체
+	// 이 객체는 JNDI (Java Naming & Directory Interface) API를 통해 사용
+	// "이름"을 가지고 데이터베이스 정보를 얻을 수 있는 API
+	
+	private Connection conn;
+	private PreparedStatement pstmt;
+	private ResultSet rs;
+	
+//	private String driver = "oracle.jdbc.OracleDriver";
+//	private String url = "jdbc:oracle:thin:@localhost:1521:xe";
+//	private String uid = "C##JSPUSER";
+//	private String upw = "jsp123";
+	
+	private MemberDAO() {
+		
+		try {
+			
+			Context context = new InitialContext();
+			// JNDI 서비스를 제공하는 객체
+			
+			ds = (DataSource)context.lookup("java:comp/env/jdbc/oracle");
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	private static MemberDAO instance = new MemberDAO();
+	
+	public static MemberDAO getInstance() {
+		return instance;
+	}
+	
+	
+	private void close(Connection conn) {
+		
+		try {
+			
+			if(conn != null) {
+				conn.close();
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void close(PreparedStatement pstmt) {
+		
+		try {
+			
+			if(pstmt != null) {
+				pstmt.close();
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void close(ResultSet rs) {
+		
+		try {
+			
+			if(rs != null) {
+				rs.close();
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	
+	
+	// kgmember 회원의 전체 데이터를 얻어와 모든 데이터를 반환해주는 메소드
+	public List<MemberDTO> memberList(){
+		
+		List<MemberDTO> list = new ArrayList<>();
+		
+		String query = "SELECT * FROM KGMEMBER";
+		
+		try {
+			
+//			Class.forName(driver);
+//			conn = DriverManager.getConnection(url, uid, upw);
+			
+			conn = ds.getConnection();
+			
+			pstmt = conn.prepareStatement(query);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				String id = rs.getString("ID");
+				String pw = rs.getString("PW");
+				String name = rs.getString("NAME");
+				String email = rs.getString("EMAIL");
+				Timestamp regDate = rs.getTimestamp("REGDATE");
+				String address = rs.getString("ADDRESS");
+				
+				list.add(new MemberDTO(id, pw, name, email, regDate, address));
+				
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			
+			close(rs);
+			close(pstmt);
+			close(conn);
+			
+		}
+		
+		return list;
+		
+	}
+	
+	// 회원정보를 받아서 회원의 데이터를 DB에 넣는 메소드
+	public int memberInsert(MemberDTO dto) {
+		
+		int result = 0;
+//		ID	VARCHAR2(50 BYTE)
+//		PW	VARCHAR2(50 BYTE)
+//		NAME	NVARCHAR2(50 CHAR)
+//		EMAIL	VARCHAR2(50 BYTE)
+//		REGDATE	TIMESTAMP(6)
+//		ADDRESS	NVARCHAR2(50 CHAR)
+		
+		String query = "INSERT INTO KGMEMBER(ID, PW, NAME, EMAIL, ADDRESS) "
+				+ "VALUES(?, ?, ?, ?, ?)";
+		
+		try {
+			
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, dto.getId());
+			pstmt.setString(2, dto.getPw());
+			pstmt.setString(3, dto.getName());
+			pstmt.setString(4, dto.getEmail());
+			pstmt.setString(5, dto.getAddress());
+			
+			result = pstmt.executeUpdate();
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			
+			close(pstmt);
+			close(conn);
+			
+		}
+		
+		return result;
+	}
+	
+	// 회원가입전에 같은 아이디가 있는지 확인하는 메소드
+	public boolean idCheck(String id) {
+		
+		boolean idCheck = false;
+		
+		String query = "SELECT ID FROM KGMEMBER WHERE ID = ?";
+		
+		try {
+			
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, id);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) { // 같은 아이디가 존재할때
+				
+				idCheck = true;
+				
+			}else { // 같은 아이디가 존재하지 않을때
+				
+				idCheck = false;
+				
+			}
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			
+			close(rs);
+			close(pstmt);
+			close(conn);
+			
+		}
+		
+		
+		return idCheck;
+	}
+	
+	// 로그인시 아이디와 비밀번호가 맞는지 확인하는 메소드
+	// 아이디가 존재하지 않는경우 -1
+	// 아이디가 존재하는 경우 >> 비밀번호가 틀린경우 0
+	// 아이디가 존재하는 경우 >> 비밀번호가 맞는경우 1
+	public int loginCheck(String id, String pw) {
+		int result = 0;
+		
+		String query = "SELECT PW FROM KGMEMBER WHERE ID = ?";
+		
+		try {
+			
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, id);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) { // 아이디가 존재하는 경우
+				
+				String dbPw = rs.getString("PW");
+				
+				if(pw.equals(dbPw)) { // 비밀번호가 맞는경우
+					result = 1;
+				}else { // 비밀번호가 틀린경우
+					result = 0;
+				}
+				
+				
+			}else { // 아이디가 존재하지 않는경우
+				result = -1;
+			}
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			
+		}
+		
+		
+		return result;
+	}
+	
+	
+	// 한명의 회원정보를 얻는 메소드
+	
+	// 회원의 정보를 수정해주는 메소드
+	
+	// 회원의 정보를 삭제해주는 메소드
+	
+	
+	
+	
+	
+}
+
+
+
+
+
+

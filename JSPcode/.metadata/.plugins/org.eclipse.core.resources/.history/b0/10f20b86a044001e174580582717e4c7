@@ -1,0 +1,25 @@
+package com.mvc.board;
+
+import java.sql.*;
+import javax.sql.*;
+import java.util.*;
+
+public class BoardDAO {
+	
+	private Connection conn;
+	private PreparedStatement pstmt;
+	private ResultSet rs;
+	private DataSource ds;
+	
+	private BoardDAO() {
+		
+	}
+	
+	private static BoardDAO instance = new BoardDAO();
+	
+	public static BoardDAO getInstance() {
+		return instance;
+	}
+	
+	
+}

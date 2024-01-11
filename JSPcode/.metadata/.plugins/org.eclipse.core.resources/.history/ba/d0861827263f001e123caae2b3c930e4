@@ -1,0 +1,26 @@
+<%@page import="com.jsp.kgmember.MemberDAO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	
+	<%--
+		MemberDAO 객체 생성 후 
+		memberList 메소드 호출하여 
+		List<MemberDTO> 객체를 얻은 후 
+		회원의 정보 웹브라우저에 출력하기
+	 --%>
+	
+	<%
+		MemberDAO dao = new MemberDAO();
+	
+	
+	%>
+	
+</body>
+</html>

@@ -1,0 +1,41 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+    
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	
+	<%--
+	choose는 자바의 switch문과 비슷한 역할을 한다.
+	case와 같은 역할을 하는것은 choose안의 when태그 이다.
+	default문 같은 역할을 사용하고 싶으면 choose태그 안에 otherwise 태그를 한다.
+	 --%>
+	
+	<c:set var="a" value="10" />
+	
+	<c:choose>
+		<c:when test="${a == 10 }">
+			a는 10 입니다.<br>
+		</c:when>
+		
+		<c:when test="${a == 20 }">
+			a는 20 입니다.<br>
+		</c:when>
+		
+		<c:otherwise>
+			a는 10과 20이 아닙니다.<br>
+		</c:otherwise>
+		
+	</c:choose>
+	
+</body>
+</html>
+
+
+

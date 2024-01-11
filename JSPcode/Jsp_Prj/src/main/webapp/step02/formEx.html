@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	
+	<!-- 
+		학생정보 입력 폼 만들기
+		studentID, name, age, circle[checkbox]
+		학번 이름, 나이, 동아리
+		request02.jsp 로 보내기
+	-->
+	
+	<h2>학생정보 입력 폼</h2>		
+	
+	<form action="request02.jsp" method="post">
+		
+		학번 : <input type="text" name="studentID" ><br>
+		이름 : <input type="text" name="name"><br>
+		나이 : <input type="number" name="age"><br>
+		
+		동아리 : <input type="checkbox" name="circle" value="밴드">밴드
+		<input type="checkbox" name="circle" value="사진">사진
+		<input type="checkbox" name="circle" value="축구">축구
+		<input type="checkbox" name="circle" value="영화감상">영화감상
+		<br>
+		
+		<input type="submit" value="학생정보 전송">
+		
+	</form>
+	
+</body>
+</html>
+
+
+
+
+
+

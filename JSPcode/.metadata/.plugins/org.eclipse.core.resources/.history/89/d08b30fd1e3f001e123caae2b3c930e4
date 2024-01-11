@@ -1,0 +1,27 @@
+package com.jsp.kgmember;
+
+import java.sql.Timestamp;
+
+public class MemberDTO {
+	
+	// DTO : Data Transfer Object
+	// 계층간 데이터 교환을 위한 자바빈 객체
+	
+//	ID	VARCHAR2(50 BYTE)
+//	PW	VARCHAR2(50 BYTE)
+//	NAME	NVARCHAR2(50 CHAR)
+//	EMAIL	VARCHAR2(50 BYTE)
+//	REGDATE	TIMESTAMP(6)
+//	ADDRESS	NVARCHAR2(50 CHAR)
+	
+	private String id;
+	private String pw;
+	private String name;
+	private String email;
+	private Timestamp regDate;
+	private String address;
+	
+	
+	
+	
+}

@@ -1,0 +1,40 @@
+package com.mvc.board;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class WriteCommand implements Command {
+
+	@Override
+	public String execute(HttpServletRequest request, HttpServletResponse response) {
+		
+		String bWriter = request.getParameter("bWriter");
+		String bTitle = request.getParameter("bTitle");
+		String bContent = request.getParameter("bContent");
+		
+		BoardDTO dto = new BoardDTO();
+		dto.setbWriter(bWriter);
+		dto.setbTitle(bTitle);
+		dto.setbContent(bContent);
+		
+		BoardDAO dao = BoardDAO.getInstance();
+		
+		int result = dao.boardInsert(dto);
+		
+		String msg = null;
+		String url = null;
+		
+		if(result == 1) {
+			msg = "글이 등록되었습니다.";
+			url = "/list.do";
+		}else {
+			msg = "글 등록 실패입니다.";
+		}
+		
+		request.setAttribute("msg", msg);
+		
+		return "board/message.jsp";
+		
+	}
+
+}

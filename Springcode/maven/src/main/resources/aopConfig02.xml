@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+	
+	<bean id="bank" class="com.spring.aop.ex03.Bank" />
+	
+	<bean id="logAop" class="com.spring.aop.ex03.LogAop" />
+	
+	<aop:aspectj-autoproxy />
+	
+	<!-- 
+		aop를 어노테이션으로 설정하기 위해 스프링 설정파일에
+		<aop:aspectj-autoproxy /> 앨리먼트를 선언한다.
+	 -->
+	
+</beans>

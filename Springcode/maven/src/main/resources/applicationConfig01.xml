@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- 
+		<bean> 태그를 사용하여 해당 빈 클래스를 스프링이 관리하는 
+		빈 객체로 생성할 수 있다.
+		id : 빈의 이름설정
+		class : 패키지명을 포함하여 해당 클래스의 전체 이름을 명시
+	 -->
+	
+	<bean id="bbq" class="com.spring.di.ex01.BBQChicken" />
+	
+	<bean id="bhc" class="com.spring.di.ex01.BHCChicken" />
+	
+	<bean id="myOrder" class="com.spring.di.ex01.ChickenOrder">
+	
+		<constructor-arg>
+			<ref bean="bbq"/>
+		</constructor-arg>
+	
+	</bean>
+	
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

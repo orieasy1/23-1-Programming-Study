@@ -1,0 +1,14 @@
+package com.mvc.board;
+
+public class AA {
+	public static void main(String[] args) {
+		
+		String str = "ABCDEFG";
+		
+		String str2 = str.substring(1);
+		
+		System.out.println(str2);
+		
+		
+	}
+}

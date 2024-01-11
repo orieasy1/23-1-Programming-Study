@@ -1,0 +1,83 @@
+package com.mvc.board;
+
+import java.sql.*;
+import javax.sql.*;
+import javax.naming.*;
+import java.util.*;
+
+public class BoardDAO {
+	
+	private Connection conn;
+	private PreparedStatement pstmt;
+	private ResultSet rs;
+	private DataSource ds;
+	
+	private BoardDAO() {
+		
+		try {
+			
+			Context context = new InitialContext();
+			
+			ds = (DataSource)context.lookup("java:comp/env/jdbc/oracle");
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private static BoardDAO instance = new BoardDAO();
+	
+	public static BoardDAO getInstance() {
+		return instance;
+	}
+	
+	private void close(Connection conn) {
+		
+		try {
+			
+			if(conn != null) {
+				conn.close();
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void close(PreparedStatement pstmt) {
+		
+		try {
+			
+			if(pstmt != null) {
+				pstmt.close();
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void close(ResultSet rs) {
+		
+		try {
+			
+			if(rs != null) {
+				rs.close();
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+}
+
+
+
+
+

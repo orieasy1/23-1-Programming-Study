@@ -1,0 +1,16 @@
+package com.jsp.kgmember;
+
+public class A {
+	
+	private A() {
+		
+	}
+	
+	private static A instance = new A();
+	
+	public static getInstance() {
+		return instance;
+	}
+	
+	
+}

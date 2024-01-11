@@ -1,0 +1,31 @@
+package com.mvc.board;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class ModifyCommand implements Command {
+
+	@Override
+	public String execute(HttpServletRequest request, HttpServletResponse response) {
+		
+		String bId = request.getParameter("bId");
+		String bTitle = request.getParameter("bTitle");
+		String bContent = request.getParameter("bContent");
+		
+		BoardDTO dto = new BoardDTO();
+		
+		dto.setbId(Integer.parseInt(bId));
+		dto.setbTitle(bTitle);
+		dto.setbContent(bContent);
+		
+		BoardDAO dao = BoardDAO.getInstance();
+		
+		int result = dao.boardUpdate(dto);
+		
+		
+		
+		
+		return null;
+	}
+
+}

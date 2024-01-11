@@ -1,0 +1,6 @@
+#Tomcat publish data
+#Sun Aug 27 18:54:49 KST 2023
+org.eclipse.jst.jee.server\:Servlet_Prj=D\:\\JspClass\\JspClass_week\\apache-tomcat-9.0.78\\wtpwebapps\\Servlet_Prj
+org.eclipse.jst.jee.server\:Jsp_MVC=D\:\\JspClass\\JspClass_week\\apache-tomcat-9.0.78\\wtpwebapps\\Jsp_MVC
+org.eclipse.jst.jee.server\:Jsp_Prj=D\:\\JspClass\\JspClass_week\\apache-tomcat-9.0.78\\wtpwebapps\\Jsp_Prj
+org.eclipse.jst.jee.server\:Jsp_DB=D\:\\JspClass\\JspClass_week\\apache-tomcat-9.0.78\\wtpwebapps\\Jsp_DB

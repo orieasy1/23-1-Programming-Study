@@ -1,0 +1,16 @@
+package com.mvc.board;
+
+public class AA {
+	public static void main(String[] args) {
+		
+		String str = "ABCDEFG";
+		
+		String str2 = str.substring(1, 3);
+		// index 1부터 2까지 문자열을 받환
+		
+		
+		System.out.println(str2);
+		
+		
+	}
+}

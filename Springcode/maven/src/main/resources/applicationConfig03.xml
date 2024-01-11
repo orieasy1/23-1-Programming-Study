@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- 
+		싱글톤 : 조회할 때마다 클라이언트에게 같은 빈을 반환해준다.
+		프로토타입 : 조회할 때마다 새로운 인스턴스를 생성해서 반환해준다.
+	 -->
+	
+	<bean id="myMember" class="com.spring.di.ex03.Member" >
+		
+		<property name="id" value="hong" />
+		<property name="pw" value="1234" />
+		<property name="name" value="홍길동" />
+		<property name="age" value="20" />
+		
+	</bean>
+
+	
+
+</beans>

@@ -1,0 +1,9 @@
+package com.jsp.kgmember;
+
+public class A {
+	
+	private A() {
+		
+	}
+	
+}

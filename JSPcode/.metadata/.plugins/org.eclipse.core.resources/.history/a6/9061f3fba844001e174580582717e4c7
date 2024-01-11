@@ -1,0 +1,175 @@
+package com.mvc.board;
+
+import java.sql.*;
+import javax.sql.*;
+import javax.naming.*;
+import java.util.*;
+
+public class BoardDAO {
+	
+	private Connection conn;
+	private PreparedStatement pstmt;
+	private ResultSet rs;
+	private DataSource ds;
+	
+	private BoardDAO() {
+		
+		try {
+			
+			Context context = new InitialContext();
+			
+			ds = (DataSource)context.lookup("java:comp/env/jdbc/oracle");
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private static BoardDAO instance = new BoardDAO();
+	
+	public static BoardDAO getInstance() {
+		return instance;
+	}
+	
+	private void close(Connection conn) {
+		
+		try {
+			
+			if(conn != null) {
+				conn.close();
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void close(PreparedStatement pstmt) {
+		
+		try {
+			
+			if(pstmt != null) {
+				pstmt.close();
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void close(ResultSet rs) {
+		
+		try {
+			
+			if(rs != null) {
+				rs.close();
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	// 게시판 목록을 만들기 위해 Board 테이블의 모든 데이터를 얻어오는 메소드
+	public ArrayList<BoardDTO> boardList(){
+		
+		String query = "SELECT * FROM BOARD ORDER BY BID DESC";
+		
+		ArrayList<BoardDTO> list = new ArrayList<>();
+		
+		try {
+			
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(query);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				int bId = rs.getInt("BID");
+				String bWriter = rs.getString("BWRITER");
+				String bTitle = rs.getString("BTITLE");
+				String bContent = rs.getString("BCONTENT");
+				Timestamp bDate = rs.getTimestamp("BDATE");
+				int bHit = rs.getInt("BHIT");
+				
+				list.add(new BoardDTO(bId, bWriter, bTitle, bContent, bDate, bHit));
+				
+			}
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+			close(conn);
+		}
+		
+		return list;
+	}
+	
+	// 글 작성 후 DB에 데이터를 넣는 메소드
+	public int boardInsert(BoardDTO dto) {
+//		BID	NUMBER(4,0)
+//		BWRITER	NVARCHAR2(20 CHAR)
+//		BTITLE	NVARCHAR2(100 CHAR)
+//		BCONTENT	NVARCHAR2(500 CHAR)
+//		BDATE	TIMESTAMP(6)
+//		BHIT	NUMBER(4,0)
+		int result = 0;
+		
+		String query = "INSERT INTO BOARD(BID, BWRITER, BTITLE, BCONTENT) "
+				+ "VALUES(BOARD_SEQ.NEXTVAL, ?, ?, ?)";
+		
+		return result;
+	}
+	
+	// 제목 클릭시 해당 내용을 보여주기 위해 데이터를 얻어오는 메소드
+	public BoardDTO getContent(int bId) {
+		BoardDTO dto = null;
+		
+		String query = "SELECT * FROM BOARD WHERE BID = ?";
+		
+		return dto;
+	}
+	
+	// 조회수를 하나 증가시켜 주는 메소드
+	private void upHit(int bId) {
+		String query = "UPDATE BOARD SET BHIT = BHIT + 1 WHERE BID = ?";
+		
+	}
+	
+	// 게시글을 수정해주는 메소드
+	public int boardUpdate(BoardDTO dto) {
+		int result = 0;
+		String query = "UPDATE BOARD SET BTITLE = ?, BCONTENT = ? "
+				+ "WHERE BID = ?";
+		
+		
+		return result;
+	}
+	
+	
+	// 게시글을 삭제해주는 메소드
+	public int boardDelete(int bId) {
+		
+		int result = 0;
+		
+		String query = "DELETE FROM BOARD WHERE BID = ?";
+		
+		return result;
+	}
+	
+	
+	
+}
+
+
+
+
+

@@ -1,0 +1,12 @@
+package com.jsp.kgmember;
+
+public class ClassMain {
+
+	public static void main(String[] args) {
+		
+		A a1 = new A();
+		A a2 = new A();
+
+	}
+
+}

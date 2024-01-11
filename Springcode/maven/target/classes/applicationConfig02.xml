@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	
+	<bean id="student" class="com.spring.di.ex02.Student">
+		
+		<property name="studentID" value="202301" />
+		<property name="name" value="홍길동" />
+		<property name="age" value="20" />
+		<property name="tel" value="010-1111-2222" />
+		
+		<property name="circle">
+		
+			<list>
+				<value>밴드</value>
+				<value>사진</value>
+				<value>축구</value>
+				<value>음악</value>
+			</list>
+		
+		</property>
+		
+	</bean>
+	
+	<bean id="studentService" class="com.spring.di.ex02.StudentService">
+		
+		<property name="student" ref="student" />
+		
+	</bean>
+	
+	
+</beans>
+
+
+
+
+

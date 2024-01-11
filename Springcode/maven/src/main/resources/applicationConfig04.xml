@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
+	<!-- 
+		<bean> 태그를 사용하여 Pet 클래스로부터 스프링이 관리하는
+		빈 객체 만들기
+		PetProfile 클래스로부터 빈 객체 만들기 (기본생성자)
+	 -->
+	
+	<bean id="myPet" class="com.spring.di.ex04.Pet">
+		<constructor-arg>
+			<value>야옹이</value>
+		</constructor-arg>
+		<constructor-arg value="멍멍이" />
+		
+		<property name="fish">
+			<value>니모</value>
+		</property>
+		
+		<property name="duck" value="꽥꽥이" />
+		
+	</bean>
+	
+	<bean id="myPet2" class="com.spring.di.ex04.Pet" 
+		c:cat="야옹이2" c:dog="멍멍이2" p:fish="니모2" p:duck="꽥꽥이2" />
+	
+	
+	
+	<bean id="petPro" class="com.spring.di.ex04.PetProfile" />
+	
+	<!-- 
+		스프링 컨텍스트에 생성되어 자장된 빈 객체들에 대해
+		@Autowired 와 @Qualifier 어노테이션을 인식할 수 있도록 하는 스캔명령
+	 -->
+	
+	<context:annotation-config />
+	
+	
+</beans>
+
+
+
+
+
+

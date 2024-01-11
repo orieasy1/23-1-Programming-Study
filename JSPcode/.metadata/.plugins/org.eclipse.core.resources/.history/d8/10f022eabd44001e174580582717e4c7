@@ -1,0 +1,18 @@
+package com.mvc.board;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class ModifyCommand implements Command {
+
+	@Override
+	public String execute(HttpServletRequest request, HttpServletResponse response) {
+		
+		request.getParameter("bId");
+		request.getParameter("bTitle");
+		request.getParameter("bContent");
+		
+		return null;
+	}
+
+}

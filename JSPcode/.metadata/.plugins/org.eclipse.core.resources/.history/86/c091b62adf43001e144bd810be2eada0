@@ -1,0 +1,20 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	
+	<%--
+		1. 넘어온 데이터 받기
+		2. MemberDTO 객체 생성후 파라미터 값을 DTO 객체의 프로퍼티 값으로 셋팅
+		3. DAO 객체 생성 후 memberUpdate 메소드 호출하여 결과값 얻기
+		4. 결과값이 1이라면 자바스크립트로 회원정보가 수정되었습니다. 출력 후 
+		   main.jsp 로 리다이렉트 하기
+	 --%>
+	
+</body>
+</html>

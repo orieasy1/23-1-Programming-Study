@@ -1,0 +1,18 @@
+package com.mvc.board;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class ContentViewCommand implements Command {
+
+	@Override
+	public String execute(HttpServletRequest request, HttpServletResponse response) {
+		
+		String bId = request.getParameter("bId");
+		
+		
+		
+		return null;
+	}
+
+}

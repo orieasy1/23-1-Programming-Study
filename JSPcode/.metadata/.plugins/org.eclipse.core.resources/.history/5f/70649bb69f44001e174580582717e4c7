@@ -1,0 +1,24 @@
+package com.mvc.board;
+
+import java.sql.Timestamp;
+
+public class BoardDTO {
+	
+//	BID	NUMBER(4,0)
+//	BWRITER	NVARCHAR2(20 CHAR)
+//	BTITLE	NVARCHAR2(100 CHAR)
+//	BCONTENT	NVARCHAR2(500 CHAR)
+//	BDATE	TIMESTAMP(6)
+//	BHIT	NUMBER(4,0)
+	
+	private int bId;
+	private String bWriter;
+	private String bTitle;
+	private String bContent;
+	private Timestamp bDate;
+	private int bHit;
+	
+	
+	
+	
+}

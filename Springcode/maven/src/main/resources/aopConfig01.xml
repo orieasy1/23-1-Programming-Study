@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+	
+	<bean id="logAop" class="com.spring.aop.ex02.LogAop" />
+	
+	<bean id="bank" class="com.spring.aop.ex02.Bank" />
+	
+	<aop:config> <!-- aop 전체설정을 지정하는 태그 -->
+	
+		<aop:aspect id="logger" ref="logAop"><!-- 공통 관심사항을 정의한 빈 -->
+			
+			<aop:pointcut id="logMethod" expression="within(com.spring.aop.ex02.Bank)" />
+			
+			<aop:before method="beforeLog" pointcut-ref="logMethod" />
+			
+			<aop:after method="afterLog" pointcut-ref="logMethod" />
+			
+			<aop:around method="aroundAop" pointcut-ref="logMethod" />
+			
+		</aop:aspect>
+	
+	</aop:config>
+	
+
+</beans>

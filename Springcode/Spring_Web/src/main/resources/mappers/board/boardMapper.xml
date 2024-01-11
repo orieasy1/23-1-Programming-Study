@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.web.board.mapper.BoardMapper">
+
+	<!-- 
+		DB 컬럼과 DTO객체의 프로퍼티를 셋팅해주는(이름을 mapping)
+		resultMap 선언 
+	 -->
+	
+	<resultMap id="boardMap" type="com.spring.web.board.dto.BoardDTO" >
+		
+		<id property="id" column="ID" />
+		<result property="writer" column="WRITER" />
+		<result property="title" column="TITLE" />
+		<result property="content" column="CONTENT" />
+		<result property="regDate" column="REG_DATE" />
+		<result property="viewCount" column="VIEW_COUNT" />
+		
+	</resultMap>
+	
+
+<!-- 게시판 목록을 만들기 위해 board테이블의 모든 데이터를 얻어오는 기능  -->
+	
+	<select id="boardList" resultMap="boardMap" >
+		
+		<choose>
+			
+			<when test="searchWord == 'writer' or 
+						searchWord == 'title' or
+						searchWord == 'content'">
+			
+				SELECT * FROM 
+				    (
+				    SELECT ROWNUM RNUM, B.* FROM 
+				        (
+				        SELECT * FROM BOARD 
+				        WHERE ${searchWord} LIKE '%' || #{key} || '%' 
+				        ORDER BY ID DESC
+				        )B 
+				    )
+				WHERE RNUM BETWEEN ${postStart} AND ${postEnd}
+			
+			</when>
+			
+			
+			<when test="searchWord == 'titleAndContent'">
+			
+				SELECT * FROM 
+				    (
+				    SELECT ROWNUM RNUM, B.* FROM 
+				        (
+				        SELECT * FROM BOARD 
+				        WHERE TITLE LIKE '%' || #{key} || '%'
+				        OR  CONTENT LIKE '%' || #{key} || '%'
+				        ORDER BY ID DESC
+				        )B 
+				    )
+				WHERE RNUM BETWEEN ${postStart} AND ${postEnd}
+			
+			</when>
+			
+			<otherwise>
+				
+				SELECT * FROM 
+				    (
+				    SELECT ROWNUM RNUM, B.* FROM 
+				        (
+				        SELECT * FROM BOARD 
+				        ORDER BY ID DESC
+				        )B 
+				    )
+				WHERE RNUM BETWEEN ${postStart} AND ${postEnd}
+			
+			</otherwise>
+			
+		</choose>
+		
+	
+	</select>
+	
+	
+	<!-- 작성자 writer // 
+		제목 title // 
+		내용 content // 
+		제목 + 내용 titleAndContent // 검색한 총 게시물 수를 얻는기능 -->
+	
+	<select id="searchCount" resultType="int">
+	
+		<choose>
+			
+			<when test="searchWord == 'writer'">
+				SELECT COUNT(*) 
+				FROM BOARD 
+				WHERE WRITER LIKE '%' || #{key} || '%'
+			</when>
+			
+			<when test="searchWord == 'title'">
+				SELECT COUNT(*) 
+				FROM BOARD 
+				WHERE TITLE LIKE '%' || #{key} || '%'
+			</when>
+			
+			<when test="searchWord == 'content'">
+				SELECT COUNT(*) 
+				FROM BOARD 
+				WHERE CONTENT LIKE '%' || #{key} || '%'
+			</when>
+			
+			<when test="searchWord == 'titleAndContent'">
+				SELECT COUNT(*) 
+				FROM BOARD 
+				WHERE TITLE LIKE '%' || #{key} || '%'
+				OR CONTENT LIKE '%' || #{key} || '%'
+			</when>
+			
+			<otherwise>
+				SELECT COUNT(*) FROM BOARD
+			</otherwise>
+			
+		</choose>
+		
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	<!-- 글 작성 후에 데이터를 db에 넣는기능 -->
+	
+	<insert id="boardInsert">
+		
+		INSERT INTO BOARD(ID, WRITER, TITLE, CONTENT) 
+		VALUES(BOARD_SEQ.NEXTVAL, #{writer}, #{title}, #{content})
+		
+	</insert>
+	
+	<!-- 아이디에 해당하는 글 내용을 보여주기 위해 데이터를 얻어오는 기능 -->
+	
+	<select id="boardContent" resultMap="boardMap" >
+		
+		SELECT * FROM BOARD WHERE ID = #{id}
+		
+	</select>
+	
+	<!-- 조회수 하나 증가시켜 주는 기능 -->
+	
+	<update id="upViewCount">
+		
+		UPDATE BOARD SET VIEW_COUNT = VIEW_COUNT + 1
+		WHERE ID = #{id}
+		
+	</update>
+	
+	<!-- 게시글을 수정해주는 기능 -->
+	
+	<update id="boardModify">
+	
+		UPDATE BOARD SET TITLE = #{title}, CONTENT = #{content}
+		WHERE ID = #{id}
+	
+	</update>
+	
+	<!-- 게시글을 삭제해주는 기능 -->
+	
+	<delete id="boardDelete">
+		DELETE FROM BOARD WHERE ID = #{id}
+	</delete>
+	
+	
+</mapper>

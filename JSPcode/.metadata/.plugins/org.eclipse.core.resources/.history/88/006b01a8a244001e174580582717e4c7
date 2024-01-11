@@ -1,0 +1,126 @@
+package com.mvc.board;
+
+import java.sql.*;
+import javax.sql.*;
+import javax.naming.*;
+import java.util.*;
+
+public class BoardDAO {
+	
+	private Connection conn;
+	private PreparedStatement pstmt;
+	private ResultSet rs;
+	private DataSource ds;
+	
+	private BoardDAO() {
+		
+		try {
+			
+			Context context = new InitialContext();
+			
+			ds = (DataSource)context.lookup("java:comp/env/jdbc/oracle");
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private static BoardDAO instance = new BoardDAO();
+	
+	public static BoardDAO getInstance() {
+		return instance;
+	}
+	
+	private void close(Connection conn) {
+		
+		try {
+			
+			if(conn != null) {
+				conn.close();
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void close(PreparedStatement pstmt) {
+		
+		try {
+			
+			if(pstmt != null) {
+				pstmt.close();
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void close(ResultSet rs) {
+		
+		try {
+			
+			if(rs != null) {
+				rs.close();
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	// 게시판 목록을 만들기 위해 Board 테이블의 모든 데이터를 얻어오는 메소드
+	public ArrayList<BoardDTO> boardList(){
+		
+		ArrayList<BoardDTO> list = new ArrayList<>();
+		
+		
+		return list;
+	}
+	
+	// 글 작성 후 DB에 데이터를 넣는 메소드
+	public int boardInsert(BoardDTO dto) {
+		
+		int result = 0;
+		
+		return result;
+	}
+	
+	// 제목 클릭시 해당 내용을 보여주기 위해 데이터를 얻어오는 메소드
+	public BoardDTO getContent(int bId) {
+		BoardDTO dto = null;
+		
+		return dto;
+	}
+	
+	// 조회수를 하나 증가시켜 주는 메소드
+	private void upHit(int bId) {
+		
+		
+	}
+	
+	// 게시글을 수정해주는 메소드
+	public int boardUpdate(BoardDTO dto) {
+		int result = 0;
+		
+		
+		return result;
+	}
+	
+	
+	// 게시글을 삭제해주는 메소드
+	
+	
+	
+}
+
+
+
+
+
