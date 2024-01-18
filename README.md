@@ -1,6 +1,7 @@
 <h1>프로그래밍 공부의 첫 시작</h1>
 
-![image](https://github.com/orieasy1/23-1-Programming-Study/assets/129071350/99838641-079a-4853-b1fe-89c703251d24)
+<img width="300" alt="image" src="https://github.com/orieasy1/23-1-Programming-Study/assets/129071350/fab3b7f4-0de3-4a3b-8046-ce1f7adbfffe">
+
 
 **2023.03 ~ 2023.08**
 
