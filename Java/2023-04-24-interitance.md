@@ -40,7 +40,8 @@ class 자식클래스 extends 부모클래스 {
 자바에서는 단일 상속만 지원한기에 extends 키워드 뒤에는 단 하나의 부모 클래스만 와야한다. 자바에서 클래스들은 1대 1의 관계이다.
 2. 부모클래스에서 private 접근제한을 갖는 필드와 메솓는 상속대상에서 제외된다.<br>
 또 만약 부모클래스와 자식 클래스가 다른 패키지에 존재한다면 default 접근제한을 갖는 필드와 메소드도 상속 대상에서 제외된다.
-<br><br>
+<br>
+
 ```java
 class Parent{ //부모클래스
 	int parentField = 100;
@@ -194,6 +195,7 @@ super(매개값, ...);이 생략되면 컴파일러에 의해 super()가 자동�
 부모 클래스에 기본 생성자가 없고 매개 변수가 있는 생성자만 있다면 반드시 자식 생성자에서 super(매개값, ..)을 명시적으로 호출해야한다.
 <br><br>
 예제) 사람의 이름, 회사, 직책을 출력하는 프로그램 수정본
+
 ```java
 class Man {
 	String name;
@@ -212,18 +214,19 @@ class BussinessMan extends Man {
 	String position;
 	
 	public BusinessMan (String name, String company, String position) {
-	//자식 클래스는 인자값을 다 받아주긴 해야함
+		//자식 클래스는 인자값을 다 받아주긴 해야함
 	
-	super(name);
-	//부모 클래스에 속해있는 멤버는 부모클래스에서 초기화하는 것이 안정적 -> 호출
-	//초기화해줄 재료는 전달
-	this.company = company;
-	this.position = position;
+		super(name);
+		//부모 클래스에 속해있는 멤버는 부모클래스에서 초기화하는 것이 안정적 -> 호출
+		//초기화해줄 재료는 전달
+		this.company = company;
+		this.position = position;
 
-	public void tellYourInfo() {
-		System.out.println("My company is " + company);
-		System.out.println("My position is " + position);
-		tellYourName();
+		public void tellYourInfo() {
+			System.out.println("My company is " + company);
+			System.out.println("My position is " + position);
+			tellYourName();
+		}
 	}
 }
 
@@ -231,7 +234,8 @@ public class MyBusinessMan {
 	public static void main(String[] args) {
 		BusinessMan man = new BusinessMan("yoon", "hybrid ELD", "Staff Eng.");
 		man.tellYourInfo();
-	
+	}
+}
 ```
 
 ```java
@@ -327,10 +331,13 @@ static 키워드로 선언된다는 것이 특징인데, 인스턴스 변수와 
 이것들은 상속의 대상이 아니기 때문이다.
 
 클래스 변수와 클래스 메소드도 마찬가지이다.
+
 1. 집주인 부모 = 부모클래스
 2. 집주인 자식 = 자식클래스
-3. 세들어 사는 사람들 = static으로 선언된 클래스 변수와 메소드<br>
+3. 세들어 사는 사람들 = static으로 선언된 클래스 변수와 메소드
+
 로 표현할 수 있을 것이다.
+
 부모클래스의 인스턴스와 static 멤버들은 전혀 상관이 없다.
 부모는 단순히 바로 직접적인 접근이 가능하다는 접근권한만 있는 것이지 실제로 정적 멤버를 가지고 있는 것은 아니기 때문이다.
 정적 멤버도 상속이 가능한지에 대해 따질 때도 이렇게 생각하면 된다.
@@ -349,7 +356,8 @@ static 키워드로 선언된다는 것이 특징인데, 인스턴스 변수와 
 2. super 키워드<br>
 super 키워드를 사용하여 하위 클래스에서 상위클래스의 클래스 변수와 메소드에 접근할 수 있다.
 super.variable 형태로 상위 클래스의 클래스 변수에 접근할 수 있고 super.method()형태로 상위클래스의 클래스 메소드에 접근할 수 있다.
-<br><br>
+<br>
+
 최종 정리를 하자면 상위 클래스의 인스턴스를 생성해도 상위 클래스의 클래스 변수는 그 안에 존재하지 않는데 하위 클래스 인스턴스 안에는 당연하지 존재하지 않을 것이다.
 클래스 변수와 클래스 메소드 모두 상속의 대상이아니다.
 그러나 세들어 사는 것처럼, 자리를 빌려 클래스 변수가 들어오는 것이다 보니 직접 접근이 가능한데 이 권한은 자식도 가진다.
@@ -357,7 +365,6 @@ super.variable 형태로 상위 클래스의 클래스 변수에 접근할 수 �
 protected의 경우, 하위 클래스 접근을 허용한다.
 
 ```java
-
 class SuperCLS {
 	protected static int count = 0;	// 클래스 변수
 	
@@ -407,7 +414,7 @@ class MobilePhone {
 	}
 	
 	public void answer() { //메소드
-		System.out.println("hi~ from + number);
+		System.out.println("hi~ from + number");
 	}
 }
 
@@ -451,9 +458,10 @@ class MobileSnartPhone {
 2. 접근 제한을 더 강하게 재정의할 수 없다.<br>
 부모 메소드가 public 접근 제한을
 3. 새로운 예외를 throws할 수 없다.
-
 <br>
-**참조변수의 참조가능성에 대한 정리**<br>
+
+**참조변수의 참조가능성에 대한 정리**
+
 IS-A관계에서 예시로 들었던 것처럼 자식클래스를 스마트폰, 부모클래스를 모바일폰이라 하면 IS-A관계에 의해 스마트폰 클래스는 스마트폰이자 모바일폰이 되는 것이다.
 자식클래스의 인스턴스는 자식클래스형 참조변수로도 참조가능하지만 부모클래스형 참조변수로도 참조가능하다.
 이 두 경우는 분명히 차이가 있다.
@@ -552,7 +560,8 @@ CheeseCake[] cales = new CheeseCake[10];<br>
 Cake[] cakes = new CheeseCake[10];<br>
 위에는 당연하 가능한 부분이고 밑의 경우와 같이 CheeseCake배열을 생성하고 참조하는 것도 가능하다는 뜻이다.
 
-<br><br>
+<br>
+
 **메소드 오버라이딩**
 상위 클래스에 정의된 메소드를 하위 클래스에서 다시 정의하는 행위를 메소드 오버라이딩이라 하는데, 여기서 말하는 오버라이딩은 무효화 시키다의 뜻으로 해석ㄷ이 된다.
 메소드가 재정의 되었다면 부모 객체의 메소드는 무효화되기 때문에 즉 숨겨지기 때문에 자식 객체에서 메소드를 호출하면 재정의된 자식 메소드가 호출된다.

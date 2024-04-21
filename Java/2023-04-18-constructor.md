@@ -261,6 +261,7 @@ public class Ex02 {
 
 <br><br>
 문제 해결
+
 1. Car class를 만든다.
 2. 필드는 private String color; private int speed;로 한다.
 3. 생성자에서 매개변수로 매개 값을 받아서 필드를 초기화한다.
